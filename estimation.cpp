@@ -117,6 +117,17 @@ int estimate_rlc(valarray<double> dvPressure_t,
   // at 1Hz. This doesn't agree with the actual frequency content of the signal,
   // which has power also at half integer frequencies. Further, all the frequencies
   // above 100Hz represent noise.
+  //
+  // This best way to fix this is to only use frequency data from the Sxx and Sxy
+  // which coincides with the simulated frequency components. This means that 
+  // Sxx and Sxy somehow have to report their frequencies. 
+  //
+  // I think the reason for the n+1 in the array below is to remove the 0Hz
+  // component from the power spectral estimates, on the assumption that there is
+  // no power at DC. Then the only way to get sensible estimates is if the 
+  // frequency resolution of the spectral estimates agrees with the resolution of
+  // the frequency components in the pressure and flow data. 
+  //
   for(int n=0; n<N; n++) 
     {
       U[n] = real(impedanceEstimate[n+1]);
