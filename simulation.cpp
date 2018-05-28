@@ -25,7 +25,6 @@ program.
 
 int simulate_data(valarray<double>& dvPressure_t,
 		  valarray<double>& dvFlow_t,
-		  valarray<double>& dvFrequencies,
 		  double& dSmallFreq,
 		  double& dLargeFreq,
 		  double& dFreqStep
@@ -37,6 +36,7 @@ int simulate_data(valarray<double>& dvPressure_t,
      Data is generated in the following manner: first, the impedance of the system
      is computed in terms of values of R L and C inputted by the user. */
 
+  valarray<double> dvFrequencies;
   double dResistance; // R
   double dInertance; // L
   double dCompliance; // C
@@ -54,8 +54,9 @@ int simulate_data(valarray<double>& dvPressure_t,
 
   // User inputs frequency range
   cout << "The presssure and flow data will be computed at specific equally" << endl;
-  cout << "space frequencies. Choose the smallest and largest frequency, and " << endl;
-  cout << "the step size." << endl;
+  cout << "space frequencies. Choose the smallest " 
+          "and largest frequencies, and the step size." 
+       << endl;
 
  Frequency_input:
   cout << "Smallest Frequency (Hz) = ";

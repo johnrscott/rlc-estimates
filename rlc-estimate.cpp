@@ -131,9 +131,6 @@ and averaging over the windows.
 ******************************************************************************/
 
 #include "simulation.h"
-//#include "fft.h"
-//#include "spectral.h"
-//#include "file.h"
 #include "estimation.h"
 
 using namespace std;
@@ -145,14 +142,17 @@ int main(int argc, char* argv[])
 {
   valarray<double> pressure;
   valarray<double> flow;
-  valarray<double> frequencies;
   double SmallFreq;
   double LargeFreq;
   double FreqStep;
 
+  // This routine prompts the user for values of R, L and C and
+  // generates pressure and flow data containing a range of frequencies
+  // ready for analysis. The frequency range entered by the user is
+  // in the variables SmallFreq, LargeFreq and FreqStep, which are 
+  // passed by reference to the function.
   int result = simulate_data(pressure, 
 			     flow, 
-			     frequencies,
 			     SmallFreq, 
 			     LargeFreq, 
 			     FreqStep);

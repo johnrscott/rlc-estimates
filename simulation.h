@@ -26,7 +26,6 @@ using namespace std;
 
 int simulate_data(valarray<double>& dvPressure_t, 
 		  valarray<double>& dvFlow_t, 
-		  valarray<double>& dvFrequencies,
 		  double& dSmallFreq,
 		  double& dLargeFreq,
 		  double& dFreqStep
