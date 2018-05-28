@@ -53,7 +53,6 @@ int estimate_rlc(valarray<double> dvPressure_t,
       dvFrequencies[n] = SmallFreq + n*FreqStep; // real
     }
 
-
   cout << "******    Estimation of RLC values    ******" << endl;
   cout << "The pressure and flow data inputs have " << dvFlow_t.size() 
        << " points each." << endl;
@@ -108,7 +107,16 @@ int estimate_rlc(valarray<double> dvPressure_t,
   V.resize(N);
 
   // This is only going to work when all frequencies in impedanceEstimate are
-  // of interest.
+  // of interest. There's a bug hiding in here. Suppose that the pressure and 
+  // flow data contains frequency components at half integer frequencies: 0.5Hz,
+  // 1Hz, 1.5Hz, ..., 100Hz. Then F will contain 200 points. Lets say that the
+  // pressure and flow data contained 1024 samples at a sampling frequency of 
+  // 1024Hz. Then the resulting 1024 point fourier transform will result in 
+  // a 1024 point long signal in the frequency domain, whose frequency resolution
+  // is 1Hz. So the impedance estimate is going to contain 1024 values, spaced 
+  // at 1Hz. This doesn't agree with the actual frequency content of the signal,
+  // which has power also at half integer frequencies. Further, all the frequencies
+  // above 100Hz represent noise.
   for(int n=0; n<N; n++) 
     {
       U[n] = real(impedanceEstimate[n+1]);
