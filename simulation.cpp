@@ -81,18 +81,27 @@ int simulate_data(valarray<double>& dvPressure_t,
   // Generate an array of frequencies 
   int N(((dLargeFreq - dSmallFreq)/dFreqStep)+1);
   dvFrequencies.resize(N);
- 
-  cout << "The impedance Z(f) will be computed at " << N << " frequency points:" << endl;
-  
+   
   for(int n=0; n <= N-1; n++)
     {
       dvFrequencies[n] = dSmallFreq + n * dFreqStep;
     }
 
-  // Print some of the frequencies
-  cout << dvFrequencies[0] << "Hz, " << dvFrequencies[1] << "Hz, " 
-       << "..., " << dvFrequencies[N-1] << "Hz." << endl;
-
+  // Print some of the frequencies. There is a special case to deal with 
+  // where the list might contain 4 or less elements. If so, print all the
+  // frequencies.
+  cout << "The impedance Z(f) will be computed at " << N << " frequency point(s):" << endl;
+ 
+  if(dvFrequencies.size() <=4 ) {
+    for(int n=0; n<dvFrequencies.size(); n++) {
+      cout << dvFrequencies[n] << "Hz, "; 
+    }
+    cout << endl; 
+  } else {
+    cout << dvFrequencies[0] << "Hz, " << dvFrequencies[1] << "Hz, " 
+	 << "..., " << dvFrequencies[N-1] << "Hz." << endl;
+  }
+  cout << endl;
   // Compute the impedance
   complex<double> Z[N];
  
