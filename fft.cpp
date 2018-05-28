@@ -10,7 +10,7 @@ Last Modified: 28th May 2018
 
 Language: C++
 
-Compilation: 
+Compilation: make -k
 
 Description: This file contains a function which computes the radix 2 Fast 
 Fourier Transform of an input dataset using decimation in time. 
@@ -34,7 +34,7 @@ X[1] = x[0] - x[1]
 
 Further, it is possible to rearrange the above formula so that an N-point
 Discrete Fourier Transform is expressed in terms of 2 (N/2)-point Discrete 
-Fourier Transforms. If N is a power of two, then an N-point DFT can therefore
+Fourier Transforms. If N is a power of two, an N-point DFT can therefore
 be computed entirely in terms of Butterfly operations.
 
 
@@ -44,7 +44,12 @@ be computed entirely in terms of Butterfly operations.
 
 using namespace std;
 
-int butterfly(complex<double> in_p, complex<double> in_q, complex<double>& out_p, complex<double>& out_q, int r, complex<double> W_N)
+int butterfly(complex<double> in_p, 
+	      complex<double> in_q, 
+	      complex<double>& out_p, 
+	      complex<double>& out_q, 
+	      int r, 
+	      complex<double> W_N)
 /* The Butterfly Operation  */
 {
   // Compute the Butterfly operation
