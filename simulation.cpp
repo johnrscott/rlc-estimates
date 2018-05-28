@@ -113,7 +113,7 @@ int simulate_data(valarray<double>& dvPressure_t,
     }
 
   // The input pressure is taken to be the sum of N sinusoids of constant power
-  // the frequency range of interest, with random phases.
+  // in the frequency range of interest, with random phases.
   
   double daPressurePhase[N];
   double daFlowMag[N];

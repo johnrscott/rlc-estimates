@@ -75,9 +75,10 @@ int Sxy(T x, T y, valarray<complex<double> >& output)
   
   /* The cross-spectral density of x[n] and y[n] is given by
 
-     Sxy[k] = X[k]^* Y[n], where ^* denotes complex conjugation
+     Sxy[k] = X[k]^* Y[n], 
 
-     where X[k] is the Discrete Fourier Transform of x[n].
+     where ^* denotes complex conjugation and where X[k] is 
+     the Discrete Fourier Transform of x[n].
   */
 
   // Check that x and y are th same length
