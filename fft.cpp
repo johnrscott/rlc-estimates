@@ -37,6 +37,10 @@ Discrete Fourier Transform is expressed in terms of 2 (N/2)-point Discrete
 Fourier Transforms. If N is a power of two, an N-point DFT can therefore
 be computed entirely in terms of Butterfly operations.
 
+The decimation-in-time algorithm invloves mixing up the order of the input
+data array, so that the butterfly operations can be computed in-place. Then
+the output data array is correctly ordered in frequency.
+
 There are a couple of critical routines that are required for implementing 
 the FFT. One is the butterfly operation. The other is the ability to bit 
 reverse addresses so that the next set of butterfly operations can be
@@ -110,6 +114,9 @@ int fft_dit(T input, valarray<complex<double> >& output)
   in.resize(N);
   for(int n=0; n < N; n++)
     {
+      // The point here is to put the data back into the in
+      // array, but in the correct order for the butterfly 
+      // operations.
       in[n] = input[bitReverse(n,S)];
     }
   
