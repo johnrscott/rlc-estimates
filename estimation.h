@@ -19,4 +19,4 @@ int estimate_rlc(std::valarray<double> dvPressure_t,
  		 double SmallFreq, 
 		 double LargeFreq, 
 		 double FreqStep,
-		 double R, double L, double C);
+		 double& R, double& L, double& C);
