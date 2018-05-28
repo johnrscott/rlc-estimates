@@ -70,8 +70,7 @@ int estimate_rlc(valarray<double> dvPressure_t,
 	   << endl;
       return 1;
     }
-
-  result = Sxy(dvPressure_t, dvFrequencies, crossspectrum);
+  result = Sxy(dvPressure_t, dvFlow_t, crossspectrum);
   if(result != 0)
     {
       cerr << "Error: Sxx function did not execute correctly. Terminating program."
