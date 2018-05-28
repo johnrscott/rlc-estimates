@@ -45,7 +45,9 @@ There are a couple of critical routines that are required for implementing
 the FFT. One is the butterfly operation. The other is the ability to bit 
 reverse addresses so that the next set of butterfly operations can be
 performed. It's not really clear to me the best way to do that in C++. There
-is a routine for it here, but I'm not really convinced it's that good.
+is a routine for it here, but I'm not really convinced it's that good. I 
+expect Intel architectures have instructions for bit reversed memory 
+accesses. That would definitely be the way to go.
 
 *****************************************************************************/
 
