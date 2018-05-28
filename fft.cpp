@@ -97,13 +97,12 @@ template<typename T>
 int fft_dit(T input, valarray<complex<double> >& output)
 {
   int N(input.size()); // Length of input.
-  cout << "N is " << N << endl;
   const complex<double> W_N(cos(2*M_PI/N),-sin(2*M_PI/N));
  
   // Check whether the input length is a power of 2.
   if((log2(N)-static_cast<int>(log2(N))) != 0)
     {
-      cerr << "Error: N must be a power of 2." << N << endl;
+      cerr << "Error: N must be a power of 2." << endl;
       return 1; // N must be a power of two.
     }
 
