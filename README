@@ -1,0 +1,3 @@
+To compile to code run make -k
+
+See the comments in rlc-estimate.cpp for more detail.
