@@ -84,7 +84,7 @@ int simulate_data(valarray<double>& dvPressure_t,
   cout << endl;
  
   // Generate an array of frequencies 
-  int N(((dLargeFreq - dSmallFreq)/dFreqStep)+1);
+  int N(round((dLargeFreq - dSmallFreq)/dFreqStep)+1);
   dvFrequencies.resize(N);
    
   for(int n=0; n <= N-1; n++)
