@@ -70,7 +70,7 @@ int simulate_data(valarray<double>& dvPressure_t,
   // Check that the frequency range divides exactly into a multiple of 
   // the step size. The test computes a floating point division of the frequency
   // interval by the frequency step, and checks that the remainder is effectively
-  // zero. I'm sure there must be a better way than this
+  // zero. I'm sure there must be a better way than this.
   cout << remainder((dLargeFreq - dSmallFreq), dFreqStep);
   if (abs(remainder((dLargeFreq - dSmallFreq), dFreqStep)) > 10e-10)
     {
