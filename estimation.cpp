@@ -36,7 +36,9 @@ int estimate_rlc(valarray<double> dvPressure_t,
   // calls. It should all just be consistent.
   valarray<double> dvFrequencies;
   valarray<complex<double> > F;
-  double size(1 + (LargeFreq - SmallFreq)/FreqStep); 
+
+  double size(1 + (LargeFreq - SmallFreq)/FreqStep);
+  /* There's something up with theses tests.
   if(size != (int)size)
     {
       cerr << "Error: Start and end frequencies are " 
@@ -44,7 +46,8 @@ int estimate_rlc(valarray<double> dvPressure_t,
               "Terminating program."
 	   << endl;
       return 1;
-    }  
+    }
+  */   
   dvFrequencies.resize(size);
   F.resize(size);
   for(int n=0; n<size; n++) 
@@ -128,6 +131,13 @@ int estimate_rlc(valarray<double> dvPressure_t,
   // frequency resolution of the spectral estimates agrees with the resolution of
   // the frequency components in the pressure and flow data. 
   //
+  // E.g. If the simulated data has frequency components at 0.2Hz, 0.4Hz, etc. up
+  // to 100Hz, then the fft needs to have a resolution of precisely 0.2Hz. This 
+  // can be achieved with, e.g., 1024 samples at a sampling rate of 204.8Hz. Note
+  // also that it is important for there to be enough sampling points so that the 
+  // fft goes up to 100Hz (in this case it needs at least 500 points in the non-
+  // trivial half of the transform). Extra fft points are just ignored by this 
+  // routine (that's also part of the bug)
   for(int n=0; n<N; n++) 
     {
       U[n] = real(impedanceEstimate[n+1]);
