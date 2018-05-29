@@ -66,16 +66,24 @@ int simulate_data(valarray<double>& dvPressure_t,
   cout << "Frequency Step (Hz) = ";
   cin >> dFreqStep;
 
-  // Check that the frequency range divides exactly into a multiple of the step size.
-  if (fmod((dLargeFreq - dSmallFreq),dFreqStep) != 0)
+
+  /* Got rid of this check until I can figure out how to do it properly
+  //
+  // Check that the frequency range divides exactly into a multiple of 
+  // the step size.
+  double test((dLargeFreq - dSmallFreq)/dFreqStep);
+  cout << test;
+  cout << static_cast<int>(test);
+  if (fmod((dLargeFreq - dSmallFreq), dFreqStep) != 0)
     {
       cout << endl;
+      cout << fmod((dLargeFreq - dSmallFreq), dFreqStep);
       cout << "Invalid choice of frequency parameters. The step size is not compatible" << endl; 
       cout << "with the frequency range. Input new values:" << endl;
       cout << endl;
       goto Frequency_input;
     }
-
+  */ 
   cout << endl;
  
   // Generate an array of frequencies 
