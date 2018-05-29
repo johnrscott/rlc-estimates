@@ -37,6 +37,8 @@ int estimate_rlc(valarray<double> dvPressure_t,
   valarray<double> dvFrequencies;
   valarray<complex<double> > F;
 
+  // There's something up with the way it's doing this calculation. It 
+  // seems to work sometimes but not always depending on the numbers.
   double size(1 + (LargeFreq - SmallFreq)/FreqStep);
   /* There's something up with theses tests.
   if(size != (int)size)
