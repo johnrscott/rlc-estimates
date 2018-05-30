@@ -6,7 +6,7 @@ Filename: simulation.cpp
 Version: 1.0
 
 Created: 16th October 2016
-Last Modified: 25th October 2016
+Last Modified: 30th May 2018
 
 Language: C++
 
@@ -22,6 +22,7 @@ program.
 
 #include "simulation.h"
 #include "file.h"
+#include "data.h"
 
 int simulate_data(valarray<double>& dvPressure_t,
 		  valarray<double>& dvFlow_t,
