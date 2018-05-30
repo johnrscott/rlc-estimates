@@ -24,6 +24,10 @@ Language: C++ header
 
 using namespace std;
 
+// It would be better if this populated a data object which contained both
+// the dependent and independent variables. At the moment it outputs it just
+// stores the simulated data in an array and the startpoint, endpoint and
+// stepsize of the independent variable.
 int simulate_data(valarray<double>& dvPressure_t, 
 		  valarray<double>& dvFlow_t, 
 		  double& dSmallFreq,
