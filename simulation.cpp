@@ -58,31 +58,29 @@ int simulate_data(valarray<double>& dvPressure_t,
           "and largest frequencies, and the step size." 
        << endl;
 
- Frequency_input:
-  cout << "Smallest Frequency (Hz) = ";
-  cin >> dSmallFreq;
-  cout << "Largest Frequency (Hz) = ";
-  cin >> dLargeFreq;
-  cout << "Frequency Step (Hz) = ";
-  cin >> dFreqStep;
-
   //
   // Check that the frequency range divides exactly into a multiple of 
   // the step size. The test computes a floating point division of the frequency
   // interval by the frequency step, and checks that the remainder is effectively
   // zero. I'm sure there must be a better way than this.
-  cout << remainder((dLargeFreq - dSmallFreq), dFreqStep);
-  if (abs(remainder((dLargeFreq - dSmallFreq), dFreqStep)) > 10e-10)
-    {
+  do {
+    cout << "Smallest Frequency (Hz) = ";
+    cin >> dSmallFreq;
+    cout << "Largest Frequency (Hz) = ";
+    cin >> dLargeFreq;
+    cout << "Frequency Step (Hz) = ";
+    cin >> dFreqStep;
+    
+    if(abs(remainder((dLargeFreq - dSmallFreq), dFreqStep)) > 10e-10) {
       cout << endl;
       cout << "Invalid choice of frequency parameters. The step size is not compatible" << endl; 
       cout << "with the frequency range. Input new values:" << endl;
       cout << endl;
-      goto Frequency_input;
     }
+  } while (abs(remainder((dLargeFreq - dSmallFreq), dFreqStep)) > 10e-10);
   
   cout << endl;
- 
+  
   // Generate an array of frequencies 
   int N(round((dLargeFreq - dSmallFreq)/dFreqStep)+1);
   dvFrequencies.resize(N);
