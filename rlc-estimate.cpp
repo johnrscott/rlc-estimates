@@ -132,6 +132,7 @@ and averaging over the windows.
 
 #include "simulation.h"
 #include "estimation.h"
+#include "data.h"
 
 using namespace std;
 
@@ -140,6 +141,8 @@ complex<double> imagPart(complex<double> v) { return v.imag(); }
 
 int main(int argc, char* argv[]) 
 {
+  dsignal<double> p;
+  dsignal<double> f;
   valarray<double> pressure;
   valarray<double> flow;
   double SmallFreq;

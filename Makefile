@@ -6,7 +6,7 @@ rlc-estimate: rlc-estimate.o
 	$(CC) $(LFLAGS) -o rlc-estimate rlc-estimate.o estimation.o simulation.o file.o spectral.o fft.o
 	rm -f *.o *~
 
-rlc-estimate.o: rlc-estimate.cpp estimation.o simulation.o
+rlc-estimate.o: rlc-estimate.cpp data.h estimation.h simulation.h estimation.o simulation.o
 	$(CC) $(CFLAGS) rlc-estimate.cpp simulation.o estimation.o
 
 simulation.o: simulation.cpp simulation.h data.h file.o spectral.o
