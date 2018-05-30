@@ -23,7 +23,7 @@ Language: C++ header
 class dsignal
 {
  private:
-  valarray<complex> data;
+  valarray<complex<double> > data;
   double indep_start;
   double indep_end;
   double indep_step;
@@ -33,7 +33,6 @@ class dsignal
   int get_size(void) { return data.size(); }
   // Get the independent/dependent variable values at a point
   int get_x(int N, double& value) { value = indep_start + N*indep_step; return 0; }
-  int get_y(int N, double& value) { value = data[N]; return 0; }
+  int get_y(int N, complex<double>& value) { value = data[N]; return 0; }
     
-  }
-}
+};
