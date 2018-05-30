@@ -149,7 +149,7 @@ int simulate_data(valarray<double>& dvPressure_t,
   double samplingFreq; 
 
   // User inputs the desired number of sampling points
-  cout << "Input the desired number of samples of simulated data:" << endl;
+  cout << "Input the desired total number of samples in the simulated data:" << endl;
   cout << "N = ";
   cin >> S;
   cout << endl;
