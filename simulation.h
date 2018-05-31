@@ -6,7 +6,7 @@ Filename: simulation.h
 Version: 1.0
 
 Created: 16th October 2016
-Last Modified: 28th May 2018
+Last Modified: 30th May 2018
 
 Language: C++ header
 
@@ -21,6 +21,7 @@ Language: C++ header
 #include <complex>
 #include <random>
 #include <fstream>
+#include "data.h"
 
 using namespace std;
 
@@ -28,8 +29,8 @@ using namespace std;
 // the dependent and independent variables. At the moment it outputs it just
 // stores the simulated data in an array and the startpoint, endpoint and
 // stepsize of the independent variable.
-int simulate_data(valarray<double>& dvPressure_t, 
-		  valarray<double>& dvFlow_t, 
+int simulate_data(dsignal<double>& dvPressure_t, 
+		  dsignal<double>& dvFlow_t, 
 		  double& dSmallFreq,
 		  double& dLargeFreq,
 		  double& dFreqStep
