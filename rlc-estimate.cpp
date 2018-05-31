@@ -143,8 +143,8 @@ int main(int argc, char* argv[])
 {
   dsignal<double> p;
   dsignal<double> f;
-  valarray<double> pressure;
-  valarray<double> flow;
+  dsignal<double> pressure;
+  dsignal<double> flow;
   double SmallFreq;
   double LargeFreq;
   double FreqStep;
