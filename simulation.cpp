@@ -24,15 +24,15 @@ program.
 #include "file.h"
 #include "data.h"
 
-int simulate_data(valarray<double>& dvPressure_t,
-		  valarray<double>& dvFlow_t,
+int simulate_data(dsignal<double>& dvPressure_t,
+		  dsignal<double>& dvFlow_t,
 		  double& dSmallFreq,
 		  double& dLargeFreq,
 		  double& dFreqStep
 		  )
 {
   using namespace std;
-
+  
   /* Stage 1: Generate pressure and flow data
      Data is generated in the following manner: first, the impedance of the system
      is computed in terms of values of R L and C inputted by the user. */
@@ -71,7 +71,7 @@ int simulate_data(valarray<double>& dvPressure_t,
     cin >> dLargeFreq;
     cout << "Frequency Step (Hz) = ";
     cin >> dFreqStep;
-    
+
     if(abs(remainder((dLargeFreq - dSmallFreq), dFreqStep)) > 10e-10) {
       cout << endl;
       cout << "Invalid choice of frequency parameters. The step size is not compatible" << endl; 
@@ -79,7 +79,9 @@ int simulate_data(valarray<double>& dvPressure_t,
       cout << endl;
     }
   } while (abs(remainder((dLargeFreq - dSmallFreq), dFreqStep)) > 10e-10);
-  
+
+
+
   cout << endl;
   
   // Generate an array of frequencies 

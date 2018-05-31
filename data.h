@@ -42,7 +42,7 @@ class dsignal
  public:
   dsignal(){}
   // Resize the signal array (does this make sense?) 
-  int get_size(void) { return data.size(); }
+  int size(void) { return data.size(); }
   int resize(int N) { data.resize(N); return 0; }
   // Get the independent/dependent variable values at a point
   int get_x(int N, double& value) { value = indep_start + N*indep_step; return 0; }

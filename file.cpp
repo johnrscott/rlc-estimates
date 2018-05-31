@@ -23,6 +23,7 @@ Description: Contains functions for reading and writing to the disk.
 #include <complex>
 #include <fstream>
 #include <string>
+#include "data.h"
 
 using namespace std;
 
@@ -62,4 +63,10 @@ template int writeFile<valarray<double> >
 (valarray<double> fileData, string fileLabel);
 
 template int writeFile<valarray<complex<double> > >
+(valarray<complex<double> > fileData, string fileLabel);
+
+template int writeFile<dsignal<double> >
+(valarray<double> fileData, string fileLabel);
+
+template int writeFile<dsignal<complex<double> > >
 (valarray<complex<double> > fileData, string fileLabel);
