@@ -12,10 +12,10 @@ rlc-estimate.o: rlc-estimate.cpp data.h estimation.h simulation.h estimation.o s
 simulation.o: simulation.cpp simulation.h data.h file.o spectral.o
 	$(CC) $(CFLAGS) simulation.cpp file.o spectral.o
 
-estimation.o: estimation.cpp estimation.h file.o spectral.o
+estimation.o: estimation.cpp estimation.h data.h file.o spectral.o
 	$(CC) $(CFLAGS) estimation.cpp file.o spectral.o
 
-file.o: file.cpp file.h
+file.o: file.cpp file.h data.h
 	$(CC) $(CFLAGS) file.cpp
 
 spectral.o: spectral.cpp fft.o spectral.h
