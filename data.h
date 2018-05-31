@@ -20,6 +20,16 @@ Language: C++ header
 // to have a fixed step size. The type can be used to store time domain
 // or frequency domain data.
 //
+// The question is whether it is better to store the independent variable
+// as an array (faster access, more data usage), or compute values of the
+// independent variable every time they are needed. The second method
+// doesn't generalise if there isn't some rule which generates the
+// independent variable
+//
+// By default, operator[] accesses the the dependent variable array. Is
+// that a good idea? 
+//
+
 template<typename T>
 class dsignal
 {
@@ -28,15 +38,20 @@ class dsignal
   double indep_start;
   double indep_end;
   double indep_step;
-  
-  
+    
  public:
   dsignal(){}
   // Resize the signal array (does this make sense?) 
   int get_size(void) { return data.size(); }
+  int resize(int N) { data.resize(N); return 0; }
   // Get the independent/dependent variable values at a point
   int get_x(int N, double& value) { value = indep_start + N*indep_step; return 0; }
-  int get_y(int N, T& value) { value = data[N]; return 0; }
+  T operator[](int N) const { return data[N]; }
+  T& operator[](int N) { return data[N]; } // Assignment version -- returns an r-value for assignment
+  // Get the start/end/step of the independent variable
+  int get_xstart(int N, double& value) { value = indep_start; return 0; }
+  int get_xend(int N, double& value) { value = indep_end; return 0; }
+  int get_xstep(int N, double& value) { value = indep_step; return 0; }
   // It would be good to have a description of the data stored in the type for debugging purposes.
   // int description(char * string) {}
 };
