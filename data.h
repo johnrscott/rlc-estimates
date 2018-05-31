@@ -12,6 +12,9 @@ Language: C++ header
 
 ******************************************************************************/
 
+#ifndef DATA_H // Protection against multiple inclusion
+#define DATA_H
+
 #include <valarray>
 #include <complex>
 
@@ -29,6 +32,8 @@ Language: C++ header
 // By default, operator[] accesses the the dependent variable array. Is
 // that a good idea? 
 //
+
+using namespace std; // Is it a good idea putting these in header files?
 
 template<typename T>
 class dsignal
@@ -55,3 +60,5 @@ class dsignal
   // It would be good to have a description of the data stored in the type for debugging purposes.
   // int description(char * string) {}
 };
+
+#endif
