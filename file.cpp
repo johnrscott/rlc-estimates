@@ -66,7 +66,7 @@ template int writeFile<valarray<complex<double> > >
 (valarray<complex<double> > fileData, string fileLabel);
 
 template int writeFile<dsignal<double> >
-(valarray<double> fileData, string fileLabel);
+(dsignal<double> fileData, string fileLabel);
 
 template int writeFile<dsignal<complex<double> > >
-(valarray<complex<double> > fileData, string fileLabel);
+(dsignal<complex<double> > fileData, string fileLabel);
