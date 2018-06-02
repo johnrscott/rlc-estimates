@@ -6,7 +6,7 @@ Filename: rlc-estimates.cpp
 Version: 1.0
 
 Created: 16th October 2016
-Last Modified: 25th October 2016
+Last Modified: 2nd June 2018
 
 Language: C++
 
@@ -161,7 +161,7 @@ int main(int argc, char* argv[])
 			     FreqStep);
   if(result != 0)
     {
-      cerr << "Error: Simulation failed" << endl;
+	  cerr << "Error: Simulation failed" << endl;
       return 1;
     }
 
