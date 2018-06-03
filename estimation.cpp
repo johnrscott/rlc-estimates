@@ -16,12 +16,10 @@ Description:
 
 ******************************************************************************/
 
+#define _USE_MATH_DEFINES // Windows trickery
 #include "estimation.h"
 #include "spectral.h" 
 #include "file.h"
-
-#define _USE_MATH_DEFINES // Windows trickery
-#include <cmath>
 
 int estimate_rlc(valarray<double> dvPressure_t,
 		 valarray<double> dvFlow_t,
@@ -160,7 +158,7 @@ int estimate_rlc(valarray<double> dvPressure_t,
   //   }
 
   // Compute a, b and c
-  complex<double> a = (one/pow((complex<double>(2*M_PI,0)*F),2)).sum();
+  complex<double> a = (one / pow((complex<double>(2 * M_PI, 0)*F), 2)).sum();
   complex<double> b = pow((complex<double>(2*M_PI,0)*F),2).sum();
   complex<double> c = pow(N,2) - a*b;
 

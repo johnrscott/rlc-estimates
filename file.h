@@ -17,7 +17,7 @@ Language: C++ header
 #include <stdlib.h>
 #include <valarray>
 #include <time.h>
-#include <cmath>
+//#include <cmath>
 #include <complex>
 #include <random>
 #include <fstream>
