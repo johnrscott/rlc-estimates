@@ -20,6 +20,9 @@ Description:
 #include "spectral.h" 
 #include "file.h"
 
+#define _USE_MATH_DEFINES // Windows trickery
+#include <cmath>
+
 int estimate_rlc(valarray<double> dvPressure_t,
 		 valarray<double> dvFlow_t,
 		 double SmallFreq, 
