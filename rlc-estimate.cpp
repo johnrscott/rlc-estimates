@@ -166,12 +166,12 @@ int main(int argc, char* argv[])
     }
 
   double R, L, C;
-  result = estimate_rlc(pressure, 
-			flow, 
-			SmallFreq, 
-			LargeFreq, 
-			FreqStep, 
-			R, L, C);
+  // result = estimate_rlc(pressure, 
+  // 			flow, 
+  // 			SmallFreq, 
+  // 			LargeFreq, 
+  // 			FreqStep, 
+  // 			R, L, C);
 
   // Print estimates
   cout << "Resistance estimate: "<< R << endl;
