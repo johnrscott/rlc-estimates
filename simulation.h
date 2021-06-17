@@ -23,7 +23,7 @@ Language: C++ header
 #include <fstream>
 #include "data.h"
 
-using namespace std;
+//using namespace std;
 
 // It would be better if this populated a data object which contained both
 // the dependent and independent variables. At the moment it outputs it just

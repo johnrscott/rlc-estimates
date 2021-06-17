@@ -22,8 +22,8 @@ Language: C++ header
 #include <random>
 #include <fstream>
 
-using namespace std;
+//using namespace std;
 
 template<typename T>
-int writeFile(T fileData, string fileLabel);
+int writeFile(T fileData, std::string fileLabel);
 

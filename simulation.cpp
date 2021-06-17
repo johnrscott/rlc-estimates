@@ -31,33 +31,33 @@ int simulate_data(dsignal<double>& dvPressure_t,
 		  double& dFreqStep
 		  )
 {
-  using namespace std;
+    //using namespace std;
   
   /* Stage 1: Generate pressure and flow data
      Data is generated in the following manner: first, the impedance of the system
      is computed in terms of values of R L and C inputted by the user. */
 
-  valarray<double> dvFrequencies;
+  std::valarray<double> dvFrequencies;
   double dResistance; // R
   double dInertance; // L
   double dCompliance; // C
 
   // User inputs R, L and C
-  cout << "Input desired values for R, L and C. Type a value and press enter." << endl;
-  cout << "R = ";
-  cin >> dResistance;
-  cout << "L = ";
-  cin >> dInertance;
-  cout << "C = ";
-  cin >> dCompliance;
+  std::cout << "Input desired values for R, L and C. Type a value and press enter." << std::endl;
+  std::cout << "R = ";
+  std::cin >> dResistance;
+  std::cout << "L = ";
+  std::cin >> dInertance;
+  std::cout << "C = ";
+  std::cin >> dCompliance;
   
-  cout << endl;
+  std::cout << std::endl;
 
   // User inputs frequency range
-  cout << "The presssure and flow data will be computed at specific equally" << endl;
-  cout << "space frequencies. Choose the smallest " 
+  std::cout << "The presssure and flow data will be computed at specific equally" << std::endl;
+  std::cout << "space frequencies. Choose the smallest " 
           "and largest frequencies, and the step size." 
-       << endl;
+       << std::endl;
 
   //
   // Check that the frequency range divides exactly into a multiple of 
@@ -65,24 +65,24 @@ int simulate_data(dsignal<double>& dvPressure_t,
   // interval by the frequency step, and checks that the remainder is effectively
   // zero. I'm sure there must be a better way than this.
   do {
-    cout << "Smallest Frequency (Hz) = ";
-    cin >> dSmallFreq;
-    cout << "Largest Frequency (Hz) = ";
-    cin >> dLargeFreq;
-    cout << "Frequency Step (Hz) = ";
-    cin >> dFreqStep;
+    std::cout << "Smallest Frequency (Hz) = ";
+    std::cin >> dSmallFreq;
+    std::cout << "Largest Frequency (Hz) = ";
+    std::cin >> dLargeFreq;
+    std::cout << "Frequency Step (Hz) = ";
+    std::cin >> dFreqStep;
 
     if(abs(remainder((dLargeFreq - dSmallFreq), dFreqStep)) > 10e-10) {
-      cout << endl;
-      cout << "Invalid choice of frequency parameters. The step size is not compatible" << endl; 
-      cout << "with the frequency range. Input new values:" << endl;
-      cout << endl;
+      std::cout << std::endl;
+      std::cout << "Invalid choice of frequency parameters. The step size is not compatible" << std::endl; 
+      std::cout << "with the frequency range. Input new values:" << std::endl;
+      std::cout << std::endl;
     }
   } while (abs(remainder((dLargeFreq - dSmallFreq), dFreqStep)) > 10e-10);
 
 
 
-  cout << endl;
+  std::cout << std::endl;
   
   // Generate an array of frequencies 
   int N(round((dLargeFreq - dSmallFreq)/dFreqStep)+1);
@@ -96,25 +96,25 @@ int simulate_data(dsignal<double>& dvPressure_t,
   // Print some of the frequencies. There is a special case to deal with 
   // where the list might contain 4 or less elements. If so, print all the
   // frequencies.
-  cout << "The impedance Z(f) will be computed at " << N << " frequency point(s):" << endl;
+  std::cout << "The impedance Z(f) will be computed at " << N << " frequency point(s):" << std::endl;
  
   if(dvFrequencies.size() <=4 ) {
     for(int n=0; n<dvFrequencies.size(); n++) {
-      cout << dvFrequencies[n] << "Hz, "; 
+      std::cout << dvFrequencies[n] << "Hz, "; 
     }
-    cout << endl; 
+    std::cout << std::endl; 
   } else {
-    cout << dvFrequencies[0] << "Hz, " << dvFrequencies[1] << "Hz, " 
-	 << "..., " << dvFrequencies[N-1] << "Hz." << endl;
+    std::cout << dvFrequencies[0] << "Hz, " << dvFrequencies[1] << "Hz, " 
+	 << "..., " << dvFrequencies[N-1] << "Hz." << std::endl;
   }
-  cout << endl;
+  std::cout << std::endl;
   // Compute the impedance
-  complex<double> Z[N];
+  std::complex<double> Z[N];
  
   for(int n=0; n <= N-1; n++)
     {
       //  Z = R + (j2 pi f)L + C/(j2 pi f)
-      Z[n] = complex<double>(dResistance, 2*M_PI*dvFrequencies[n]*dInertance - 
+      Z[n] = std::complex<double>(dResistance, 2*M_PI*dvFrequencies[n]*dInertance - 
 			     dCompliance/(2*M_PI*dvFrequencies[n]));
     }
 
@@ -152,21 +152,21 @@ int simulate_data(dsignal<double>& dvPressure_t,
   double samplingFreq; 
 
   // User inputs the desired number of sampling points
-  cout << "Input the desired total number of samples in the simulated data:" << endl;
-  cout << "N = ";
-  cin >> S;
-  cout << endl;
-  cout << "Input the sampling rate." << endl;
-  cout << "Sampling rate = ";
-  cin >> samplingFreq;
+  std::cout << "Input the desired total number of samples in the simulated data:" << std::endl;
+  std::cout << "N = ";
+  std::cin >> S;
+  std::cout << std::endl;
+  std::cout << "Input the sampling rate." << std::endl;
+  std::cout << "Sampling rate = ";
+  std::cin >> samplingFreq;
 
-  valarray<double> dvPressure_f;
+  std::valarray<double> dvPressure_f;
   dvPressure_f.resize(N);
-  valarray<double> dvFlow_f;
+  std::valarray<double> dvFlow_f;
   dvFlow_f.resize(N);
-  //valarray<double> dvPressure_t;
+  //std::valarray<double> dvPressure_t;
   dvPressure_t.resize(S);
-  //valarray<double> dvFlow_t;
+  //std::valarray<double> dvFlow_t;
   dvFlow_t.resize(S);
 
   // Generate samples of the pressure signal
@@ -191,9 +191,9 @@ int simulate_data(dsignal<double>& dvPressure_t,
       dvFlow_t[n] = dvFlow_f.sum();
     }
   
-  cout << endl;
+  std::cout << std::endl;
 
-  cout << "Finished generating pressure and flow data." << endl << endl;
+  std::cout << "Finished generating pressure and flow data." << std::endl << std::endl;
 
   // Write the pressure data to a file
   writeFile(dvPressure_t, "pressure data");
