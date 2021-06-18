@@ -27,8 +27,10 @@ program.
 std::valarray<double> real(std::valarray<std::complex<double>> vec)
 {
     std::valarray<double> result(vec.size());
+    for (std::size_t k = 0; k < vec.size(); k++) {
+	result[k] = vec[k].real();
+    }
     return result;
-
 }
 
 int simulate_data(dsignal<double>& pressure,
@@ -170,34 +172,24 @@ int simulate_data(dsignal<double>& pressure,
     std::cout << "Sampling rate = ";
     std::cin >> samplingFreq;
 
-    std::valarray<double> dvPressure_f;
-    dvPressure_f.resize(N);
-    std::valarray<double> dvFlow_f;
-    dvFlow_f.resize(N);
-    //std::valarray<double> pressure;
-    pressure.resize(S);
-    //std::valarray<double> flow;
-    flow.resize(S);
+    //  dvPressure_f;
+    // //dvPressure_f.resize(N);
+    // std::valarray<double> dvFlow_f;
+    // //dvFlow_f.resize(N);
+    // //std::valarray<double> pressure;
+    // pressure.resize(S);
+    // //std::valarray<double> flow;
+    // flow.resize(S);
 
     // Generate samples of the pressure signal
-    for(int n=0; n <= S-1; n++)
-    {
-	// Compute the contributions at each frequency, and put them in an array 
-	for(int k=0; k <= N-1; k++)
-	{
-	    dvPressure_f[k] = sin(omega[k].real()*(n/samplingFreq) - pressure_phase[k]);
-	}
+    for(int n=0; n <= S-1; n++) {
+	std::valarray<double> dvPressure_f = sin(real(omega)*(n/samplingFreq) - pressure_phase);	
 	pressure[n] = dvPressure_f.sum();
     }
   
     // Generate samples of the flow signal
-    for(int n=0; n <= S-1; n++)
-    {
-	// Compute the contributions at each frequency, and put them in an array 
-	for(int k=0; k <= N-1; k++)
-	{
-	    dvFlow_f[k] = flow_magnitude[k]*sin(omega[k].real()*(n/samplingFreq) - flow_phase[k]);
-	}
+    for(int n=0; n <= S-1; n++) {
+	std::valarray<double> dvFlow_f = flow_magnitude*sin(real(omega)*(n/samplingFreq) - flow_phase);
 	flow[n] = dvFlow_f.sum();
     }
   
