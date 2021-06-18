@@ -24,6 +24,13 @@ program.
 #include "file.h"
 #include "data.h"
 
+std::valarray<double> real(std::valarray<std::complex<double>> vec)
+{
+    std::valarray<double> result(vec.size());
+    return result;
+
+}
+
 int simulate_data(dsignal<double>& pressure,
 		  dsignal<double>& flow,
 		  double& small_freq,
