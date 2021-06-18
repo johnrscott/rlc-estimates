@@ -133,14 +133,14 @@ int simulate_data(dsignal<double>& pressure,
 
     // The input pressure is taken to be the sum of N sinusoids of constant power
     // in the frequency range of interest, with random phases.
-    std::valarray<double> pressure_phase(N);
-    std::valarray<double> flow_magnitude(N);
-    std::valarray<double> flow_phase(N);
+    //std::valarray<double> flow_magnitude(N);
+    // std::valarray<double> flow_phase(N);
 
     srand(time(NULL));
 
     // Compute the random phase (between 0 and 2*pi).
     // Not really the best way of doing it but it will serve
+    std::valarray<double> pressure_phase(N);
     for(int n=0; n <= N-1; n++)
     {
 	pressure_phase[n] = (2*M_PI/1000)*(rand() % 1000);
@@ -148,18 +148,20 @@ int simulate_data(dsignal<double>& pressure,
    
     // Compute the magnitudes of the sinusoidal components of
     // the flow 
-    for(int n=0; n <= N-1; n++)
-    {
-	flow_magnitude[n] = std::abs(Z[n]);
-    }
+    // for(int n=0; n <= N-1; n++)
+    // {
+    // 	flow_magnitude[n] = std::abs(Z[n]);
+    // }
+    std::valarray<double> flow_magnitude = real(std::abs(Z));
 
     // Compute the phases of the sinusoidal components of
     // the flow 
-    for(int n=0; n <= N-1; n++)
-    {
-	flow_phase[n] = pressure_phase[n] - arg(Z[n]);
-    }
-
+    // for(int n=0; n <= N-1; n++)
+    // {
+    // 	flow_phase[n] = pressure_phase[n] - arg(Z[n]);
+    // }
+    std::valarray<double> flow_phase = pressure_phase - real(std::arg(Z));
+    
     int S; // Number of sampling points
     double samplingFreq; 
 
@@ -172,25 +174,15 @@ int simulate_data(dsignal<double>& pressure,
     std::cout << "Sampling rate = ";
     std::cin >> samplingFreq;
 
-    //  dvPressure_f;
-    // //dvPressure_f.resize(N);
-    // std::valarray<double> dvFlow_f;
-    // //dvFlow_f.resize(N);
-    // //std::valarray<double> pressure;
-    // pressure.resize(S);
-    // //std::valarray<double> flow;
-    // flow.resize(S);
-
     // Generate samples of the pressure signal
-    for(int n=0; n <= S-1; n++) {
-	std::valarray<double> dvPressure_f = sin(real(omega)*(n/samplingFreq) - pressure_phase);	
-	pressure[n] = dvPressure_f.sum();
+    for(int n=0; n < S; n++) {
+	pressure[n] = std::sin(real(omega)*(n/samplingFreq) - pressure_phase).sum();
     }
   
     // Generate samples of the flow signal
-    for(int n=0; n <= S-1; n++) {
-	std::valarray<double> dvFlow_f = flow_magnitude*sin(real(omega)*(n/samplingFreq) - flow_phase);
-	flow[n] = dvFlow_f.sum();
+    for(int n=0; n < S; n++) {
+	flow[n]
+	    = (flow_magnitude*std::sin(real(omega)*(n/samplingFreq) - flow_phase)).sum();
     }
   
     std::cout << std::endl;
