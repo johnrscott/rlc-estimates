@@ -33,6 +33,15 @@ std::valarray<double> real(std::valarray<std::complex<double>> vec)
     return result;
 }
 
+std::valarray<double> arg(std::valarray<std::complex<double>> vec)
+{
+    std::valarray<double> result(vec.size());
+    for (std::size_t k = 0; k < vec.size(); k++) {
+	result[k] = std::arg(vec[k]);
+    }
+    return result;
+}
+
 int simulate_data(dsignal<double>& pressure,
 		  dsignal<double>& flow,
 		  double& small_freq,
@@ -123,7 +132,7 @@ int simulate_data(dsignal<double>& pressure,
     // Compute the impedance
     //std::complex<double> Z[N];
     const std::complex<double> j{0,1};
-    std::valarray<std::complex<double>> Z = R + j*L*omega - C;
+    std::valarray<std::complex<double>> Z = R + j*omega*L - C;
     
     // for(int n=0; n <= N-1; n++)
     // {
@@ -160,7 +169,7 @@ int simulate_data(dsignal<double>& pressure,
     // {
     // 	flow_phase[n] = pressure_phase[n] - arg(Z[n]);
     // }
-    std::valarray<double> flow_phase = pressure_phase - real(std::arg(Z));
+    std::valarray<double> flow_phase = pressure_phase - arg(Z);
     
     int S; // Number of sampling points
     double samplingFreq; 
@@ -190,10 +199,18 @@ int simulate_data(dsignal<double>& pressure,
     std::cout << "Finished generating pressure and flow data." << std::endl << std::endl;
 
     // Write the pressure data to a file
-    writeFile(pressure, "pressure data");
+    //writeFile(pressure, "pressure data");
 
     // Write the flow data to a file
-    writeFile(flow, "flow data");
+    //writeFile(flow, "flow data");
+    
+    // User inputs desired file names
+    std::cout << "Save pressure and flow data as:" << std::endl;
+    std::cout << "File name = ";
+    std::string fileName;
+    std::cin >> fileName;
 
+    writeDataToFile(fileName,pressure,flow);
+    
     return 0;
 }

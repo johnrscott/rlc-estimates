@@ -24,6 +24,8 @@ Language: C++ header
 
 //using namespace std;
 
+int writeDataToFile(std::string filename, dsignal<double> pressure, dsignal<double> flow);
+
 template<typename T>
 int writeFile(T fileData, std::string fileLabel);
 
