@@ -167,12 +167,6 @@ int estimate_rlc(dsignal<double> pressure,
     std::complex<double> b = std::pow(omega,2).sum();
     std::complex<double> c = std::pow(N,2) - a*b;
 
-    std::cout << "a = " << a << std::endl;
-    std::cout << "b = " << b << std::endl;
-    std::cout << "c = " << c << std::endl;
-
-    print(U);
-    
     // Compute the estimates -- cast integers to double to avoid integer division
     // The functions also take the real part, on the assumption that the answer
     // is real anyway. This definitely needs checking!

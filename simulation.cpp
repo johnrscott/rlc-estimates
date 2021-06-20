@@ -133,7 +133,6 @@ int simulate_data(dsignal<double>& pressure,
     //std::complex<double> Z[N];
     const std::complex<double> j{0,1};
     std::valarray<std::complex<double>> Z = R + j*omega*L + C/(j*omega);
-    print(Z);
     
     // for(int n=0; n <= N-1; n++)
     // {
@@ -190,7 +189,6 @@ int simulate_data(dsignal<double>& pressure,
 	pressure[n] = std::sin(real(omega)*(n/samplingFreq) - pressure_phase).sum();
     }
   
-    std::cout << "here" << std::endl;
     flow.resize(S);
     // Generate samples of the flow signal
     for(int n=0; n < S; n++) {
