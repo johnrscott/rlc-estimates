@@ -27,15 +27,19 @@ impedance = crossspectrum/autospectrum
 U = np.real(impedance)
 V = np.imag(impedance)
 
-# Remove the DC component (where f = 0)
+# Remove the DC component of the spectral densities (where f = 0)
 U = np.delete(U, 0)
 V = np.delete(V, 0)
 omega = np.delete(omega,0)
+
+# Also remove the component at Fs, which is aliased to DC.
 U = np.delete(U, -1)
 V = np.delete(V, -1)
 omega = np.delete(omega,-1)
 
-# Use the Tsai and Pimmel formulae to compute R, L and C
+# Use the Tsai and Pimmel formulae to compute R, L and C. The formulae
+# will only work if the frequency components in the simulated data line
+# up with the spectral density calculations.
 
 # Compute a, b and c
 N = len(omega)
