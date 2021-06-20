@@ -42,7 +42,7 @@ int estimate_rlc(dsignal<double> pressure,
     std::valarray<std::complex<double> > F;
 
     int size(round(1 + (LargeFreq - SmallFreq)/FreqStep));
-    if(abs(remainder((LargeFreq - SmallFreq), FreqStep)) > 10e-10)
+    if(std::abs(remainder((LargeFreq - SmallFreq), FreqStep)) > 10e-10)
     {
 	std::cerr << "Error: Start and end frequencies are " 
 	    "incompatible with the frequency step. " 
@@ -143,14 +143,14 @@ int estimate_rlc(dsignal<double> pressure,
     // routine (that's also part of the bug)
     for(int n=0; n<N; n++) 
     {
-	U[n] = real(impedanceEstimate[n+1]);
-	V[n] = imag(impedanceEstimate[n+1]);
+	U[n] = std::real(impedanceEstimate[n+1]);
+	V[n] = std::imag(impedanceEstimate[n+1]);
     }
 
     // std::valarray of 1s
     std::valarray<std::complex<double> > one(1,N);
 
-    // // Generate the array of frequencies
+    // // // Generate the array of frequencies
     // std::valarray<std::complex<double> > F;
     // F.resize(frequencies.size());
 
@@ -161,9 +161,9 @@ int estimate_rlc(dsignal<double> pressure,
     //   }
 
     // Compute a, b and c
-    std::complex<double> a = (one / pow((std::complex<double>(2 * M_PI, 0)*F), 2)).sum();
-    std::complex<double> b = pow((std::complex<double>(2*M_PI,0)*F),2).sum();
-    std::complex<double> c = pow(N,2) - a*b;
+    std::complex<double> a = (1 / pow((std::complex<double>(2 * M_PI, 0)*F), 2)).sum();
+    std::complex<double> b = std::pow((std::complex<double>(2*M_PI,0)*F),2).sum();
+    std::complex<double> c = std::pow(N,2) - a*b;
 
     // Compute the estimates -- cast integers to double to avoid integer division
     // The functions also take the real part, on the assumption that the answer
