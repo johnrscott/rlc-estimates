@@ -24,16 +24,16 @@ spectrum of data records.
 #include "fft.h"
 
 template<typename T>
-int Sxx(T input, valarray<complex<double> >& output)
+int Sxx(std::valarray<T> input, std::valarray<std::complex<double> >& output)
 /* Compute the auto-spectral density of the input */
 {
-  valarray<complex<double> > fft;
+  std::valarray<std::complex<double> > fft;
   
   int result = fft_dit(input, fft);
   if(result != 0)
     {
-      cerr << "Error: FFT function did not execute correctly. Terminating program."
-	   << endl;
+      std::cerr << "Error: FFT function did not execute correctly. Terminating program."
+	   << std::endl;
       return 1;
     }
   
@@ -51,25 +51,26 @@ int Sxx(T input, valarray<complex<double> >& output)
 }
 
 template<typename T>
-int Sxy(T x, T y, valarray<complex<double> >& output)
+int Sxy(std::valarray<T> x, std::valarray<T> y,
+	std::valarray<std::complex<double> >& output)
 /* Compute the auto-spectral density of the input */
 {
-  valarray<complex<double> > fft_x;
-  valarray<complex<double> > fft_y;
+  std::valarray<std::complex<double> > fft_x;
+  std::valarray<std::complex<double> > fft_y;
 
   int result = fft_dit(x, fft_x);
   if(result != 0)
     {
-      cerr << "Error: FFT function did not execute correctly. Terminating program."
-	   << endl;
+      std::cerr << "Error: FFT function did not execute correctly. Terminating program."
+	   << std::endl;
       return 1;
     }
 
   result = fft_dit(y, fft_y);
   if(result != 0)
     {
-      cerr << "Error: FFT function did not execute correctly. Terminating program."
-	   << endl;
+      std::cerr << "Error: FFT function did not execute correctly. Terminating program."
+	   << std::endl;
       return 1;
     }
   
@@ -77,36 +78,36 @@ int Sxy(T x, T y, valarray<complex<double> >& output)
 
      Sxy[k] = X[k]^* Y[n], 
 
-     where ^* denotes complex conjugation and where X[k] is 
+     where ^* denotes std::complex std::conjugation and where X[k] is 
      the Discrete Fourier Transform of x[n].
   */
 
   // Check that x and y are th same length
   if(x.size()!=y.size())
     {
-      cerr << "Error: x and y have different lengths. Cannot compute Sxy.";
+      std::cerr << "Error: x and y have different lengths. Cannot compute Sxy.";
       return 1;
     }
 
   output.resize(x.size());
-  output = fft_x.apply(conj)*fft_y;
+  output = fft_x.apply(std::conj)*fft_y;
 
   return 0;
 }
 
-template int Sxx<valarray<complex<double > > >
-(valarray<complex<double > > input, valarray<complex<double> >& output);
+template int Sxx<std::complex<double>>
+(std::valarray<std::complex<double > > input, std::valarray<std::complex<double> >& output);
 
-template int Sxx<valarray<double > >
-(valarray<double > input, valarray<complex<double> >& output);
+template int Sxx<double>
+(std::valarray<double > input, std::valarray<std::complex<double> >& output);
 
-template int Sxy<valarray<complex<double > > >
-(valarray<complex<double > > x,
- valarray<complex<double > > y,
- valarray<complex<double> >& output);
+template int Sxy<std::complex<double>>
+(std::valarray<std::complex<double>> x,
+ std::valarray<std::complex<double>> y,
+ std::valarray<std::complex<double>>& output);
 
-template int Sxy<valarray<double > >
-(valarray<double > x,
- valarray<double > y, 
- valarray<complex<double> >& output);
+template int Sxy<double>
+(std::valarray<double > x,
+ std::valarray<double > y, 
+ std::valarray<std::complex<double> >& output);
 

@@ -59,6 +59,11 @@ public:
     int get_xstep(int N, double& value) { value = indep_step; return 0; }
     // It would be good to have a description of the data stored in the type for debugging purposes.
     // int description(char * string) {}
+
+    std::valarray<T> get_valarray() const {
+	return data;
+    }
+    
 };
 
 #endif

@@ -12,10 +12,10 @@ Language: C++ header
 
 ******************************************************************************/
 
-#include <valarray>
+#include "data.h"
 
-int estimate_rlc(std::valarray<double> dvPressure_t,
-		 std::valarray<double> dvFlow_t,
+int estimate_rlc(dsignal<double> dvPressure_t,
+		 dsignal<double> dvFlow_t,
  		 double SmallFreq, 
 		 double LargeFreq, 
 		 double FreqStep,

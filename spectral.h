@@ -15,10 +15,9 @@ Language: C++ header
 #include <valarray>
 #include <complex>
 
-using namespace std;
+template<typename T>
+int Sxx(std::valarray<T> input, std::valarray<std::complex<double> >& output);
 
 template<typename T>
-int Sxx(T input, valarray<complex<double> >& output);
-
-template<typename T>
-int Sxy(T x, T y, valarray<complex<double> >& output);
+int Sxy(std::valarray<T> x, std::valarray<T> y,
+	std::valarray<std::complex<double> >& output);

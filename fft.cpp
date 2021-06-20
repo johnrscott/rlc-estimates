@@ -94,7 +94,7 @@ int bitReverse(int input, int N)
 // types. (I found that out by getting compile errors when I tried to
 // delete the template!)
 template<typename T>
-int fft_dit(T input, valarray<complex<double> >& output)
+int fft_dit(std::valarray<T> input, valarray<complex<double> >& output)
 {
   int N(input.size()); // Length of input.
   const complex<double> W_N(cos(2*M_PI/N),-sin(2*M_PI/N));
@@ -159,9 +159,9 @@ int fft_dit(T input, valarray<complex<double> >& output)
   return 0;
 }
 
-template int fft_dit<valarray<complex<double > > >
-(valarray<complex<double > > input, valarray<complex<double> >& output);
+template int fft_dit<complex<double>>
+(valarray<complex<double>> input, valarray<complex<double> >& output);
 
-template int fft_dit<valarray<double > >
-(valarray<double > input, valarray<complex<double> >& output);
+template int fft_dit<double>
+(valarray<double> input, valarray<complex<double>>& output);
 

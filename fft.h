@@ -18,7 +18,7 @@ Language: C++ header
 #include <complex>
 #include <bitset>
 
-using namespace std;
+//using namespace std;
 
 template<typename T>
-int fft_dit(T input, valarray<complex<double> >& output);
+int fft_dit(std::valarray<T> input, std::valarray<std::complex<double> >& output);
