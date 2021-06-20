@@ -59,6 +59,8 @@ int estimate_rlc(dsignal<double> pressure,
 	dvFrequencies[n] = SmallFreq + n*FreqStep; // real
     }
 
+    std::valarray<std::complex<double>> omega = 2 * M_PI * F;
+    
     std::cout << "******    Estimation of RLC values    ******" << std::endl;
     std::cout << "The pressure and flow data inputs have " << dvFlow_t.size() 
 	      << " points each." << std::endl;
@@ -106,7 +108,7 @@ int estimate_rlc(dsignal<double> pressure,
     std::valarray<std::complex<double> > V;
 
     // Length of U and V
-    int N = dvFrequencies.size();
+    double N = dvFrequencies.size();
 
     // Resize U and V
     U.resize(N);
@@ -161,19 +163,22 @@ int estimate_rlc(dsignal<double> pressure,
     //   }
 
     // Compute a, b and c
-    std::complex<double> a = (1 / pow((std::complex<double>(2 * M_PI, 0)*F), 2)).sum();
-    std::complex<double> b = std::pow((std::complex<double>(2*M_PI,0)*F),2).sum();
+    std::complex<double> a = (1/std::pow(omega,2)).sum();
+    std::complex<double> b = std::pow(omega,2).sum();
     std::complex<double> c = std::pow(N,2) - a*b;
 
+    std::cout << "a = " << a << std::endl;
+    std::cout << "b = " << b << std::endl;
+    std::cout << "c = " << c << std::endl;
+
+    print(U);
+    
     // Compute the estimates -- cast integers to double to avoid integer division
     // The functions also take the real part, on the assumption that the answer
     // is real anyway. This definitely needs checking!
-    R = std::real(std::complex<double>((double)1/(double)N,0)*U.sum());
-    C = std::real((b/c) * (V/(std::complex<double>(2*M_PI,0)*F)).sum() - 
-	     (std::complex<double>(N,0)/c) * (V*(std::complex<double>(2*M_PI,0)*F)).sum());
-    L = std::real((std::complex<double>(N,0)/c) * 
-	     (V/(std::complex<double>(2*M_PI,0)*F)).sum() - 
-	     (a/c) * (V*(std::complex<double>(2*M_PI,0)*F)).sum());
+    R = std::real(U.sum())/N;
+    C = std::real((b/c)*(V/omega).sum() - (N/c)*(V*omega).sum());
+    L = std::real((N/c)*(V/omega).sum() - (a/c)*(V*omega).sum());
 
     return 0;
 

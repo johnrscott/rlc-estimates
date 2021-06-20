@@ -25,6 +25,13 @@ Language: C++ header
 
 //using namespace std;
 
+template<typename T>
+void print(const std::valarray<T> & vec) {
+    for (std::size_t k = 0; k < vec.size(); k++) {
+	std::cout << vec[k] << std::endl;
+    }
+}
+
 int writeDataToFile(std::string filename, dsignal<double> pressure, dsignal<double> flow);
 
 template<typename T>

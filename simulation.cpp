@@ -132,7 +132,8 @@ int simulate_data(dsignal<double>& pressure,
     // Compute the impedance
     //std::complex<double> Z[N];
     const std::complex<double> j{0,1};
-    std::valarray<std::complex<double>> Z = R + j*omega*L - C;
+    std::valarray<std::complex<double>> Z = R + j*omega*L + C/(j*omega);
+    print(Z);
     
     // for(int n=0; n <= N-1; n++)
     // {
