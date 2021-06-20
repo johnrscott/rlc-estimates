@@ -184,10 +184,13 @@ int simulate_data(dsignal<double>& pressure,
     std::cin >> samplingFreq;
 
     // Generate samples of the pressure signal
+    pressure.resize(S);
     for(int n=0; n < S; n++) {
 	pressure[n] = std::sin(real(omega)*(n/samplingFreq) - pressure_phase).sum();
     }
   
+    std::cout << "here" << std::endl;
+    flow.resize(S);
     // Generate samples of the flow signal
     for(int n=0; n < S; n++) {
 	flow[n]

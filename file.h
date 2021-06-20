@@ -21,6 +21,7 @@ Language: C++ header
 #include <complex>
 #include <random>
 #include <fstream>
+#include "data.h"
 
 //using namespace std;
 
