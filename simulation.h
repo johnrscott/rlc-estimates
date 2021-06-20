@@ -12,7 +12,7 @@ Language: C++ header
 
 ******************************************************************************/
 
-
+#define _USE_MATH_DEFINES
 #include <iostream>
 #include <stdlib.h>
 #include <valarray>

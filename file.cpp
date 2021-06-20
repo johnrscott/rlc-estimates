@@ -37,11 +37,17 @@ int writeDataToFile(std::string filename, dsignal<double> pressure, dsignal<doub
     }
 
     // Write the data to a file
-    file.open(filename);
+    std::cout << "Trying to open: " << filename << std::endl;
+    file.open(filename, std::ios::out);
     if(!file.is_open())
     {
-	std::cerr << "Error: Failed to open file for writing.";
-	return 1; // Error writing to file.
+        if (file.bad() == true)
+            std::cout << "Bad" << std::endl;
+        if (file.fail() == true)
+            std::cout << "Fail" << std::endl;
+
+	    std::cerr << "Error: Failed to open file for writing.";
+	    return 1; // Error writing to file.
     }
 
     file << "pressure,flow" << std::endl;

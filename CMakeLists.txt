@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.18)
 
 # set the project name
 project(rlc VERSION 0.1 LANGUAGES CXX)
@@ -13,6 +13,7 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 #find_package(OpenMP REQUIRED)
+set(CMAKE_FIND_LIBRARY_SUFFIXES ".lib")
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
     # using Clang
@@ -38,3 +39,5 @@ endif()
 
 # Example
 add_executable(rlc rlc-estimate.cpp estimation.cpp simulation.cpp file.cpp spectral.cpp fft.cpp)
+target_compile_options(rlc PUBLIC /MT)
+target_link_options(rlc PUBLIC /INCREMENTAL:NO /NODEFAULTLIB:MSVCRT)
