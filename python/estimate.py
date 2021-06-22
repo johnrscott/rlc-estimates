@@ -2,32 +2,61 @@ import pandas as pd
 from matplotlib import mlab, pyplot as plt
 import numpy as np
 
-df = pd.read_csv("time.csv")
+df_time = pd.read_csv("time.csv")
 df_freq = pd.read_csv("freq.csv")
-print(df_freq)
 
-# First create power sectral densities for normalization
-nfft = 128
-dt = df['time'][1] - df['time'][0]
+# Compute the sampling frequency assuming that the time
+# steps in the file are uniform
+dt = df_time['time'][1] - df_time['time'][0]
 fs = 1/dt
-print("dt =", dt)
-print("fs =", fs)
+S = len(df_time) # Number of samples
+#print("A = {0:d}, B = {1:2f}".format(2, 3.5))
+print("Sampling frequency of the simulated data is: %.2fHz" % (fs))
+print("Number of samples in the simulated data is:", S)
 
-(autospectrum, f) = mlab.psd(df['pressure'].to_numpy(),
+# Compute the frequency resolution of the components in the
+# simulated signal. This is important so as to choose the parameters
+# of the spectral estimation correctly so that the frequency
+# components in the spectra line up with those in the simulated
+# data
+df = df_freq['freq'][1] - df_freq['freq'][0]
+print("Frequency resolution of the simulated data is: %.2fHz" % (df))
+
+
+# The frequency resolution of the spectral estimation is given by
+# fs/nfft. The length of the Fourier transform nfft should be chosen
+# so that this resolution is equal to the resolution in the
+# simulated data
+nfft = int(fs/df) # Round to nearest integer
+
+# Sanity check the transform length
+if nfft >= S:
+    print("\nThere are not enough sampled points to get the frequency"
+          "\nresolution you need. Consider halving nfft.")
+    exit()
+
+print("Calculated length of Fourier transform:", nfft)
+
+(autospectrum, f) = mlab.psd(df_time['pressure'].to_numpy(),
                              window=mlab.window_none,
                              NFFT=nfft, Fs=fs)
-(crossspectrum, f) = mlab.csd(df['pressure'].to_numpy(), df['flow'].to_numpy(),
+(crossspectrum, f) = mlab.csd(df_time['pressure'].to_numpy(),
+                              df_time['flow'].to_numpy(),
                               window=mlab.window_none,
                               NFFT=nfft, Fs=fs)
 
-# Restrict the spectra to the frequencies contained in the simulation
+# Make a pandas dataframe containing the full spectra results
 data = {"freq": f, "auto": autospectrum, "cross": crossspectrum}
-spectra = pd.DataFrame(data)
-print(spectra)
-spectra = spectra[spectra["freq"].isin(df_freq["freq"])]
+spectra_full = pd.DataFrame(data)
+
+# Filter the full spectra to keep only those frequencies that
+# are contained in the simulated signals. If the values of the
+# spectra are used at frequencies not contained in the simulation
+# then the estimated impedance will be wrong at those frequencies
+# and consequently the estimate of R I and E will be wrong.
+spectra = spectra_full[spectra_full["freq"].isin(df_freq["freq"])]
 print(spectra)
 
-#exit()
 # Get the radial frequency
 omega = 2 * np.pi * spectra["freq"]
 

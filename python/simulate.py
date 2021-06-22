@@ -78,7 +78,7 @@ num_samples = int(input("\nInput the desired total number of "
 sampling_freq = float(input("Input the desired sampling frequency (Hz): "))
 
 # Write frequency domain information to a file
-data = {"freq/Hz": f, "Z": Z, "pressure_mag": np.ones(len(f)),
+data = {"freq": f, "Z": Z, "pressure_mag": np.ones(len(f)),
         "pressure_phase": pressure_phase, "flow_mag": flow_mag,
         "flow_phase": flow_phase}
 
