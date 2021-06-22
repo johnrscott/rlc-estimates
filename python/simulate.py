@@ -2,12 +2,16 @@ import numpy as np
 import random
 import pandas as pd
 
-# Set resistance, inertance and compliance
-print("Input desired values for R, L and C. "
+# Set resistance, inertance and elastance 
+print("Input desired values for R, I and I. "
       "Type a value and press enter.")
 R = float(input("R = "))
-L = float(input("L = "))
-C = float(input("C = "))
+I = float(input("I = "))
+E = float(input("E = "))
+
+# Compute resonance frequency for reference
+fr = np.sqrt(E/I)/(2*np.pi)
+print("The resonance frequency for these parameters is: fr = %.2fHz" % (fr))
 
 # Set the maximum and minimum frequencies
 print("\nThe pressure and flow data will be "
@@ -51,7 +55,7 @@ else:
           % (f[0], f[1], f[2], f[-2], f[-1]))
 
 # Compute the impedance
-Z = R + 1j*omega*L + C/(1j*omega)
+Z = R + 1j*omega*I + E/(1j*omega)
 
 # Compute random phases for the pressure signal
 pressure_phase = np.random.uniform(low=0.0, high=2*np.pi, size=len(f))

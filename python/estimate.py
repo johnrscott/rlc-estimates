@@ -2,7 +2,7 @@ import pandas as pd
 from matplotlib import mlab, pyplot as plt
 import numpy as np
 
-df = pd.read_csv("dat.csv")
+df = pd.read_csv("results.csv")
 print(df)
 
 # First create power sectral densities for normalization
@@ -18,7 +18,8 @@ print("fs =", fs)
 (crossspectrum, f) = mlab.csd(df['pressure'].to_numpy(), df['flow'].to_numpy(),
                               window=mlab.window_none,
                               NFFT=nfft, Fs=fs)
-
+print(f)
+exit()
 # Get the radial frequency
 omega = 2 * np.pi * f
 
@@ -33,11 +34,12 @@ V = np.delete(V, 0)
 omega = np.delete(omega,0)
 
 # Also remove the component at Fs, which is aliased to DC.
-U = np.delete(U, -1)
-V = np.delete(V, -1)
-omega = np.delete(omega,-1)
+for n in range:
+    U = np.delete(U, -1)
+    V = np.delete(V, -1)
+    omega = np.delete(omega,-1)
 
-# Use the Tsai and Pimmel formulae to compute R, L and C. The formulae
+# Use the Tsai and Pimmel formulae to compute R, I and E. The formulae
 # will only work if the frequency components in the simulated data line
 # up with the spectral density calculations.
 
@@ -49,8 +51,8 @@ c = N**2 - a*b
 
 # Compute the estimates
 R = U.sum()/N
-C = (b/c)*(V/omega).sum() - (N/c)*(V*omega).sum()
-L = (N/c)*(V/omega).sum() - (a/c)*(V*omega).sum()
+E = (b/c)*(V/omega).sum() - (N/c)*(V*omega).sum()
+I = (N/c)*(V/omega).sum() - (a/c)*(V*omega).sum()
 print("R =", R)
-print("L =", L)
-print("C =", C)
+print("I =", I)
+print("E =", E)
