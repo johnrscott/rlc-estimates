@@ -2,8 +2,9 @@ import pandas as pd
 from matplotlib import mlab, pyplot as plt
 import numpy as np
 
-df = pd.read_csv("results.csv")
-print(df)
+df = pd.read_csv("time.csv")
+df_freq = pd.read_csv("freq.csv")
+print(df_freq)
 
 # First create power sectral densities for normalization
 nfft = 128
@@ -18,26 +19,22 @@ print("fs =", fs)
 (crossspectrum, f) = mlab.csd(df['pressure'].to_numpy(), df['flow'].to_numpy(),
                               window=mlab.window_none,
                               NFFT=nfft, Fs=fs)
-print(f)
-exit()
+
+# Restrict the spectra to the frequencies contained in the simulation
+data = {"freq": f, "auto": autospectrum, "cross": crossspectrum}
+spectra = pd.DataFrame(data)
+print(spectra)
+spectra = spectra[spectra["freq"].isin(df_freq["freq"])]
+print(spectra)
+
+#exit()
 # Get the radial frequency
-omega = 2 * np.pi * f
+omega = 2 * np.pi * spectra["freq"]
 
 # Compute the impedance using Z = Sxy/Sxx
-impedance = crossspectrum/autospectrum
+impedance = spectra["cross"]/spectra["auto"]
 U = np.real(impedance)
 V = np.imag(impedance)
-
-# Remove the DC component of the spectral densities (where f = 0)
-U = np.delete(U, 0)
-V = np.delete(V, 0)
-omega = np.delete(omega,0)
-
-# Also remove the component at Fs, which is aliased to DC.
-for n in range:
-    U = np.delete(U, -1)
-    V = np.delete(V, -1)
-    omega = np.delete(omega,-1)
 
 # Use the Tsai and Pimmel formulae to compute R, I and E. The formulae
 # will only work if the frequency components in the simulated data line

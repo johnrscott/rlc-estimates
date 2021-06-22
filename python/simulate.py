@@ -3,7 +3,7 @@ import random
 import pandas as pd
 
 # Set resistance, inertance and elastance 
-print("Input desired values for R, I and I. "
+print("Input desired values for R, I and E. "
       "Type a value and press enter.")
 R = float(input("R = "))
 I = float(input("I = "))
@@ -77,13 +77,26 @@ num_samples = int(input("\nInput the desired total number of "
                         "samples in the simulated data: "))
 sampling_freq = float(input("Input the desired sampling frequency (Hz): "))
 
+# Write frequency domain information to a file
+data = {"freq/Hz": f, "Z": Z, "pressure_mag": np.ones(len(f)),
+        "pressure_phase": pressure_phase, "flow_mag": flow_mag,
+        "flow_phase": flow_phase}
+
+# Make a pandas dataframe so that writing the csv file is easier
+df = pd.DataFrame(data)
+
+# Get a filename to store the simulated data
+print("Choose a filename to store the frequency domain data\n(.csv will be appended)\n")
+filename = input("Filename: ") + ".csv"
+df.to_csv(filename, index=False)
+print("Written",filename)
+
 # The time domain pressure and flow signals are now constructed
 # by summing sinusoidal components with the correct magnitude
 # and phase (the Fourier series of the signal), and evaluating it
 # and the correct sampling points.
 
 data = {"time": [], "pressure": [], "flow": []}
-
 for n in range(num_samples):
 
     # Store current timestamp
@@ -101,7 +114,7 @@ for n in range(num_samples):
 df = pd.DataFrame(data)
 
 # Get a filename to store the simulated data
-print("Choose a filename to store the simulated data\n(.csv will be appended)\n")
+print("Choose a filename to store the time domain data\n(.csv will be appended)\n")
 filename = input("Filename: ") + ".csv"
 df.to_csv(filename, index=False)
 print("Written",filename)
