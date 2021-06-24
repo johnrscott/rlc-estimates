@@ -68,5 +68,6 @@ flow_mag = abs(Z);
 num_samples = input("\nInput the desired total number of samples in the simulated data: ");
 sampling_freq = input("Input the desired sampling frequency (Hz): ");
 
-
+pressure_mag = ones(1, length(f))
+T = table(f, Z, pressure_mag)
 
