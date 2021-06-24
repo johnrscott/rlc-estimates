@@ -51,5 +51,22 @@ else
 	  f(1), f(2), f(3), f(end-1), f(end))
 end
 
-# Compute the impedance
-Z = R + 1j*omega*L + 1/(1j*omega*C)
+## Compute the impedance
+Z = R + 1j*omega*L + 1./(1j*omega*C);
+
+## Compute random phases for the pressure signal
+pressure_phase = 2 * pi * rand(1,length(f));
+
+# Assuming that the magnitude of the pressure signal is
+# one, the magnitude of the flow signal in the frequency
+# domain is given by the magnitude of the impedance Z(f)
+flow_mag = abs(Z);
+
+# To generate the time domain version of the pressure and
+# flow signals, it is necessary to know the sampling
+# frequency and the desired number of samples
+num_samples = input("\nInput the desired total number of samples in the simulated data: ");
+sampling_freq = input("Input the desired sampling frequency (Hz): ");
+
+
+
