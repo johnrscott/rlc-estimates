@@ -2,8 +2,8 @@ import pandas as pd
 from matplotlib import mlab, pyplot as plt
 import numpy as np
 
-df_time = pd.read_csv("time.csv")
-df_freq = pd.read_csv("freq.csv")
+df_time = pd.read_csv("subject_0_time.csv")
+df_freq = pd.read_csv("subject_0_freq.csv")
 
 # Compute the sampling frequency assuming that the time
 # steps in the file are uniform
@@ -21,7 +21,6 @@ print("Number of samples in the simulated data is:", S)
 # data
 df = df_freq['freq'][1] - df_freq['freq'][0]
 print("Frequency resolution of the simulated data is: %.2fHz" % (df))
-
 
 # The frequency resolution of the spectral estimation is given by
 # fs/nfft. The length of the Fourier transform nfft should be chosen
@@ -55,7 +54,6 @@ spectra_full = pd.DataFrame(data)
 # then the estimated impedance will be wrong at those frequencies
 # and consequently the estimate of R I and E will be wrong.
 spectra = spectra_full[spectra_full["freq"].isin(df_freq["freq"])]
-print(spectra)
 
 # Get the radial frequency
 omega = 2 * np.pi * spectra["freq"]
@@ -77,8 +75,8 @@ c = N**2 - a*b
 
 # Compute the estimates
 R = U.sum()/N
-E = (b/c)*(V/omega).sum() - (N/c)*(V*omega).sum()
-I = (N/c)*(V/omega).sum() - (a/c)*(V*omega).sum()
+L = (N/c)*(V/omega).sum() - (a/c)*(V*omega).sum()
+C = 1 / ((b/c)*(V/omega).sum() - (N/c)*(V*omega).sum())
 print("R =", R)
-print("I =", I)
-print("E =", E)
+print("L =", L)
+print("C =", C)

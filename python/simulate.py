@@ -3,14 +3,14 @@ import random
 import pandas as pd
 
 # Set resistance, inertance and elastance 
-print("Input desired values for R, I and E. "
+print("Input desired values for R, L and C. "
       "Type a value and press enter.")
 R = float(input("R = "))
-I = float(input("I = "))
-E = float(input("E = "))
+L = float(input("L = "))
+C = float(input("C = "))
 
 # Compute resonance frequency for reference
-fr = np.sqrt(E/I)/(2*np.pi)
+fr = 1 / (2 * np.pi * np.sqrt(L*C))
 print("The resonance frequency for these parameters is: fr = %.2fHz" % (fr))
 
 # Set the maximum and minimum frequencies
@@ -55,7 +55,7 @@ else:
           % (f[0], f[1], f[2], f[-2], f[-1]))
 
 # Compute the impedance
-Z = R + 1j*omega*I + E/(1j*omega)
+Z = R + 1j*omega*L + 1/(1j*omega*C)
 
 # Compute random phases for the pressure signal
 pressure_phase = np.random.uniform(low=0.0, high=2*np.pi, size=len(f))
