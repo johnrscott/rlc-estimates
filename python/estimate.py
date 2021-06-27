@@ -2,8 +2,8 @@ import pandas as pd
 from matplotlib import mlab, pyplot as plt
 import numpy as np
 
-df_time = pd.read_csv("subject_0_time.csv")
-df_freq = pd.read_csv("subject_0_freq.csv")
+df_time = pd.read_csv("../octave/time.csv")
+df_freq = pd.read_csv("../octave/freq.csv")
 
 # Compute the sampling frequency assuming that the time
 # steps in the file are uniform
@@ -13,6 +13,16 @@ S = len(df_time) # Number of samples
 #print("A = {0:d}, B = {1:2f}".format(2, 3.5))
 print("Sampling frequency of the simulated data is: %.2fHz" % (fs))
 print("Number of samples in the simulated data is:", S)
+
+# Perform a correction to the frequencies if they came from
+# octave as complex numbers. The frequency column should be
+# real for this script to work
+#
+# The replace i with j is because octave outputs the (real) frequencies
+# in the form a+bi, whereas python wants them in the form a+bj.
+#
+df_freq['freq'] = df_freq['freq'].apply(
+    lambda x: np.real(np.complex(str(x).replace('i','j'))))
 
 # Compute the frequency resolution of the components in the
 # simulated signal. This is important so as to choose the parameters
@@ -29,12 +39,11 @@ print("Frequency resolution of the simulated data is: %.2fHz" % (df))
 nfft = int(fs/df) # Round to nearest integer
 
 # Sanity check the transform length
-if nfft >= S:
+print("Calculated length of Fourier transform:", nfft)
+if nfft > S:
     print("\nThere are not enough sampled points to get the frequency"
           "\nresolution you need. Consider halving nfft.")
     exit()
-
-print("Calculated length of Fourier transform:", nfft)
 
 (autospectrum, f) = mlab.psd(df_time['pressure'].to_numpy(),
                              window=mlab.window_none,
